@@ -45,7 +45,7 @@
   ],
   "post-processors": [
     {
-      "output": "../builds/{{.Provider}}/acrobatiq_centos-6.5-x86_64.box",
+      "output": "../builds/{{.Provider}}/acrobatiq_centos-6.5_prebuild-x86_64.box",
       "type": "vagrant"
     }
   ],
