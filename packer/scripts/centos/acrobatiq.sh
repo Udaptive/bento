@@ -178,8 +178,8 @@ if [ "$NODE_VERSION" != "v0.10.32" ] ; then
     make
     make install
     popd
-    rm -fr node-v0-10.32
-    rm -fr node-v0.10.32.tar.gz
+    rm -rf node-v0.10.32
+    rm -rf node-v0.10.32.tar.gz
     popd
 fi
 
@@ -194,6 +194,7 @@ if [[ ! -e /etc/httpd/modules/mod_wsgi.so ]] ; then
     ./configure --with-python=/usr/local/bin/python2.7
     make
     make install
+    popd
     rm -rf mod_wsgi-3.5 mod_wsgi-3.5.tar.gz
     # do not start until configured by bootstrap
     chkconfig httpd off
