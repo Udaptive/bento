@@ -79,6 +79,7 @@ valgrind-devel
 vim
 wget
 xmlto
+yum-security
 zlib-devel
 EOF
 
