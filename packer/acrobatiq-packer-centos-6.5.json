@@ -1,0 +1,32 @@
+{
+    "variables": {
+        "base_name": "acrobatiq-packer-centos-6.5",
+        "aws_instance_type": "c3.xlarge",
+        "aws_region": "us-east-1",
+        "aws_access_key": null,
+        "aws_secret_key": null,
+        "mirror": "http://mirrors.rit.edu/centos"
+    },
+    "builders": [
+        {
+            "type": "amazon-ebs",
+            "access_key": "{{user `aws_access_key`}}",
+            "secret_key": "{{user `aws_secret_key`}}",
+            "region": "{{user `aws_region`}}",
+            "source_ami": "ami-8997afe0",
+            "instance_type": "{{user `aws_instance_type`}}",
+            "ssh_username": "root",
+            "ami_name": "{{user `base_name`}}-{{timestamp}}"
+        }
+    ],
+    "provisioners": [
+        {
+            "type": "shell",
+            "scripts": [
+                "scripts/centos/base-packages.sh",
+                "scripts/aws/cloud-init.sh",
+                "scripts/acrobatiq/packer.sh"
+            ]
+        }
+    ]
+}
