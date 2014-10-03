@@ -1,6 +1,6 @@
 #!/bin/sh
 
-PACKER_VERSION=$(packer --version)
+PACKER_VERSION=$(/usr/local/bin/packer --version)
 if [[ "$PACKER_VERSION" != "Packer v0.7.1" ]] ; then
     if [[ -d /usr/local/packer ]] ; then
         rm -rf /usr/local/packer

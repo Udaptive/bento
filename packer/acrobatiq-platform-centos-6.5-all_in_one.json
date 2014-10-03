@@ -5,7 +5,11 @@
         "aws_region": "us-east-1",
         "aws_access_key": null,
         "aws_secret_key": null,
-        "mirror": "http://mirrors.rit.edu/centos"
+        "mirror": "http://mirrors.rit.edu/centos",
+        "git_username": null,
+        "git_password": null,
+        "git_repo": "Udaptive/platform.git",
+        "git_branch": "9_27_maintenance"
     },
     "builders": [
         {
@@ -98,9 +102,23 @@
     "provisioners": [
         {
             "type": "shell",
+            "only": ["amazon-ebs"],
+            "scripts": [
+                "scripts/platform/volumes-all_in_one.sh"
+            ]
+        },
+        {
+            "type": "shell",
             "scripts": [
                 "scripts/centos/base-packages.sh",
-                "scripts/centos/acrobatiq.sh"
+                "scripts/centos/acrobatiq.sh",
+                "scripts/platform/git-clone.sh"
+            ],
+            "environment_vars": [
+                "GIT_USERNAME={{user `git_username`}}",
+                "GIT_PASSWORD={{user `git_password`}}",
+                "GIT_REPO={{user `git_repo`}}",
+                "GIT_BRANCH={{user `git_branch`}}"
             ],
             "override": {
                 "virtualbox-iso": {
@@ -110,11 +128,10 @@
         },
         {
             "type": "shell",
-             "only": ["amazon-ebs"],
-             "scripts": [
-                 "scripts/aws/volumes.sh",
-                 "scripts/aws/cloud-init.sh"
-             ]
+            "only": ["amazon-ebs"],
+            "scripts": [
+                "scripts/aws/cloud-init.sh"
+            ]
         },
         {
             "type": "shell",
