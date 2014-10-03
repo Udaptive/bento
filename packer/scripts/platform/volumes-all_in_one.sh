@@ -1,5 +1,7 @@
 #!/bin/sh
 
+for i in $(curl -s http://169.254.169.254/latest/meta-data/block-device-mapping/) ; do echo $(curl -s http://169.254.169.254/latest/meta-data/block-device-mapping/$i); done
+
 mke2fs -t ext4 /dev/xvdf
 echo '/dev/xvdf /vagrant ext4 defaults,noatime 0 2' >> /etc/fstab
 mkdir /vagrant
