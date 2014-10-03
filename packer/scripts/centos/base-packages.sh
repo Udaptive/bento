@@ -52,6 +52,7 @@ libxslt
 libxslt-devel
 libxslt-python
 libzip-devel
+lynx
 man
 mlocate
 ncurses-devel
@@ -126,6 +127,7 @@ if [[ "$PYTHON_VERSION" != "Python 2.7.8" ]] ; then
     wget https://bitbucket.org/pypa/setuptools/raw/bootstrap/ez_setup.py
     /usr/local/bin/python2.7 ez_setup.py
     rm -f ez_setup.py
+    rm -f setuptools-*.zip
     wget https://raw.github.com/pypa/pip/master/contrib/get-pip.py
     /usr/local/bin/python2.7 get-pip.py
     rm -f get-pip.py
@@ -138,3 +140,8 @@ if [[ ! -e "/etc/profile.d/local_path.sh" ]] ; then
     echo 'pathmunge /usr/local/bin' > /etc/profile.d/local_path.sh
     chmod 644 /etc/profile.d/local_path.sh
 fi
+
+
+# disable MTA, we use SES for outbound mail
+postfix stop
+chkconfig postfix off
