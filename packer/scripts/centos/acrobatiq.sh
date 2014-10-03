@@ -1,25 +1,5 @@
 #!/bin/sh
 
-# update YUM before anything else
-yum clean all
-yum upgrade -y yum yum-plugin-fastestmirror
-
-# upgrade existing packages
-yum upgrade -y
-
-# enable EPEL repositories
-if [[ ! -e /etc/yum.repos.d/epel.repo ]] ; then
-    pushd /tmp
-    yum install wget -y
-    wget http://dl.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm
-    rpm -Uvh epel-release-6*.rpm
-    rm -f epel-release-6*.rpm
-    popd
-fi
-
-# install development tools
-yum groupinstall "Development tools" -y
-
 
 # install apache and related modules
 cat <<EOF | xargs yum install -y
@@ -45,7 +25,7 @@ popd
 
 # install mongodb 2.6.4
 MONGO_VERSION=`mongod --version | grep "db version"`
-if [ "$MONGO_VERSION" != "db version v2.6.4" ] ; then
+if [[ "$MONGO_VERSION" != "db version v2.6.4" ]] ; then
     cat <<EOF > /etc/yum.repos.d/mongodb.repo
 [mongodb]
 name=MongoDB Repository
@@ -69,7 +49,7 @@ fi
 
 # install nodejs 0.10.32
 NODE_VERSION=`node --version`
-if [ "$NODE_VERSION" != "v0.10.32" ] ; then
+if [[ "$NODE_VERSION" != "v0.10.32" ]] ; then
     pushd /tmp
     wget http://nodejs.org/dist/v0.10.32/node-v0.10.32.tar.gz
     tar xvf node-v0.10.32.tar.gz
