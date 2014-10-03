@@ -1,18 +1,31 @@
 #!/bin/sh
 
-for i in $(curl -s http://169.254.169.254/latest/meta-data/block-device-mapping/) ; do echo $(curl -s http://169.254.169.254/latest/meta-data/block-device-mapping/$i); done
+echo "Current filesystem"
+df -h
 
-mke2fs -t ext4 /dev/xvdf
-echo '/dev/xvdf /vagrant ext4 defaults,noatime 0 2' >> /etc/fstab
+echo "Available block devices"
+ls -alhF /dev/xv*
+
+# Platform
+mke2fs -t ext4 /dev/xvdj
+echo '/dev/xvdj /vagrant ext4 defaults,noatime 0 2' >> /etc/fstab
 mkdir /vagrant
 mount /vagrant
 
-mke2fs -t ext4 /dev/xvdg
-echo '/dev/xvdg /data ext4 defaults,noatime 0 2' >> /etc/fstab
+# Mongo
+mke2fs -t ext4 /dev/xvdk
+echo '/dev/xvdk /data ext4 defaults,noatime 0 2' >> /etc/fstab
 mkdir /data
 mount /data
 
-mke2fs -t ext4 /dev/xvdh
-echo '/dev/xvdh /project_repos ext4 defaults,noatime 0 2' >> /etc/fstab
+# Project Repos
+mke2fs -t ext4 /dev/xvdl
+echo '/dev/xvdl /project_repos ext4 defaults,noatime 0 2' >> /etc/fstab
 mkdir /project_repos
 mount /project_repos
+
+# Log Files
+mke2fs -t ext4 /dev/xvdm
+echo '/dev/xvdm /var/log/vagrant ext4 defaults,noatime 0 2' >> /etc/fstab
+mkdir /var/log/vagrant
+mount /var/log/vagrant

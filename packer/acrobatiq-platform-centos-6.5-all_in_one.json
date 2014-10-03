@@ -36,6 +36,11 @@
                     "device_name": "/dev/sdh",
                     "volume_type": "gp2",
                     "volume_size": 60
+                },
+                {
+                    "device_name": "/dev/sdi",
+                    "volume_type": "gp2",
+                    "volume_size": 20
                 }
             ],
             "ami_block_device_mappings": [
@@ -53,6 +58,11 @@
                     "device_name": "/dev/sdh",
                     "volume_type": "gp2",
                     "volume_size": 60
+                },
+                {
+                    "device_name": "/dev/sdi",
+                    "volume_type": "gp2",
+                    "volume_size": 20
                 }
             ]
         },
